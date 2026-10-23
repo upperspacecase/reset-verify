@@ -1,0 +1,149 @@
+{
+  "status": "passed",
+  "killed_at_stage": null,
+  "kill_reason": null,
+  "stage_2": {
+    "customer": "The IT lead or sole sysadmin (1-3 person IT team) at a 50-500 person remote-first company running Microsoft 365/Entra or Okta, who personally approves or performs MFA-reset tickets for remote employees and 1099 contractors, has no HR-adjacent verification tool, and is currently improvising verification per call. Secondary: the service-desk lead at a 10-50 tech MSP handling resets for dozens of client tenants (r/msp evidence below). The HN author (ovudus) fits the first profile: they own the help desk process, have contractors nobody can vouch for, and are asking for a workable procedure, not a policy framework.",
+    "where": "r/sysadmin (10+ threads on exactly this), r/msp (36-vote/53-comment thread 'Verify identity of caller'), r/cybersecurity, r/entra, r/ITManagers, MSPGeek Slack/Discord, Spiceworks Community, Hacker News Ask HN, Specops and Nametag webinar attendee lists.",
+    "pays_for": "Entra ID P1/P2 or Okta Workforce seats, Duo/Microsoft Authenticator MFA, a PSA/ticketing tool (HaloPSA, Freshservice, Jira Service Management), KnowBe4 security-awareness training, Huntress/CrowdStrike EDR, cyber-insurance premiums, and in some cases Specops uReset/Secure Service Desk for AD password resets."
+  },
+  "stage_3": {
+    "real_posts": [
+      "https://www.reddit.com/r/sysadmin/comments/191y1r3/secure_process_for_resetting_users_mfa/",
+      "https://www.reddit.com/r/sysadmin/comments/16ir5aj/help_desk_verification_tool/",
+      "https://www.reddit.com/r/sysadmin/comments/1co5zpt/password_and_mfa_reset_user_identity_verification/",
+      "https://www.reddit.com/r/sysadmin/comments/1cln0qn/leveraging_mfa_to_verify_employees/",
+      "https://www.reddit.com/r/sysadmin/comments/135univ/how_do_you_verify_users_when_they_call_for/",
+      "https://www.reddit.com/r/msp/comments/o10s6f/verify_identity_of_caller/",
+      "https://www.reddit.com/r/msp/comments/1b2ejhm/how_can_we_id_people_who_call_our_support_line/",
+      "https://www.reddit.com/r/msp/comments/12cyd8c/user_verification/",
+      "https://www.reddit.com/r/msp/comments/oflxcu/help_desk_client_call_in_mfa/"
+    ],
+    "urgent": "Queries run: (1) site:reddit.com/r/sysadmin help desk verify identity MFA reset social engineering, (2) site:reddit.com/r/msp help desk verify caller identity MFA reset social engineering, (3) Clorox Cognizant lawsuit help desk password reset Scattered Spider cost, (4) cyber insurance application help desk identity verification requirement 2026. Urgency evidence: r/sysadmin 16ir5aj was posted explicitly because 'with the MGM hack initially pointing at the help desk being the weak link, the topic of how do we verify calls to our help desk has come up'; r/msp 1b2ejhm author is 'authoring an internal procedure' right now and found it 'more challenging to avoid social engineering attacks than we expected'; Clorox filed a $380M suit against its help-desk provider Cognizant in July 2025 citing transcripts where agents reset MFA without any identity check (cybersecuritydive.com, csoonline.com, computerweekly.com). The HN post itself (score 8, 1 comment, posted this week) frames it as 'seeing more breaches start with a convincing call'. NOT confirmed: I searched for an explicit help-desk-verification question on 2026 cyber-insurance applications and found only generic renewal guides, so I am not claiming insurance mandates as urgency.",
+    "valuable": "Clorox claims $380M in losses from one help-desk social-engineering reset, $49M of it direct remediation (cpomagazine.com). For the Stage 2 customer the quantifiable costs are: MSP contractual liability of the Cognizant kind, and the per-call cost of the current workaround (a Teams video call with the user plus their direct supervisor per r/msp 12cyd8c, roughly 15-30 minutes of two salaried people per reset). I did not independently verify the MGM loss figure in this session and am not citing it."
+  },
+  "stage_4": {
+    "software": [
+      "Specops Secure Service Desk (specopssoft.com/product/secure-service-desk/): Active Directory-centric, sold through resellers and sales-led; the product page I read showed no public pricing. Insufficient for a 1-3 person IT team on cloud-only Entra/Okta with contractors outside AD.",
+      "Nametag Helpdesk Verification (getnametag.com/platform/helpdesk-verification): ID-document plus selfie 'Deepfake Defense' verification; enterprise sales-led, and the /pricing URL returned 404 when I fetched it, so no self-serve price exists that I could find. Insufficient because the Stage 2 customer wants to try something this week without a procurement cycle.",
+      "Microsoft Entra Verified ID helpdesk pattern (github.com/MicrosoftDocs/entra-docs helpdesk-with-verified-id.md, sample app github.com/joelst/entra-verified-id-helpdesk): requires Entra licensing, Verified ID tenant setup, and deploying a custom .NET app (sample has 0 stars). Insufficient because it is a build-it-yourself pattern, not a product, and does nothing for Okta or Google Workspace shops. Also exists: github.com/brandgor7/cisco-duo-helpdesk-app (Duo-only, 0 stars)."
+    ],
+    "workarounds": [
+      "Teams/Zoom video call with the user and their direct supervisor to vouch before the reset (r/msp 12cyd8c). Fails for the HN author's constraint: contractors and remote hires nobody recognises.",
+      "Text a one-time code to the mobile number on file in the PSA/HRIS and have the caller read it back, or call back the number on record (r/msp vxbgba). Fails when the lost phone is the reason for the call.",
+      "Security questions or a PIN set at onboarding, sometimes via a self-service reset product like ReACT (r/sysadmin bx7gn2, 16ir5aj). Guessable and rarely enrolled for contractors.",
+      "Entra Conditional Access requiring MFA re-registration from a joined device as a backstop (r/sysadmin 191y1r3). Does not apply to contractor BYOD."
+    ],
+    "graveyard": "GitHub repository search for 'helpdesk identity verification archived:true' and '\"help desk\" verify caller archived:true' returned 0 results each. The three open-source attempts found (zachlowes/Verified-Helpdesk, created June 2026, 1 star; brandgor7/cisco-duo-helpdesk-app, April 2025, 0 stars; joelst/entra-verified-id-helpdesk, March 2026, pushed Oct 19 2026, 0 stars) are all alive but are single-person, IdP-specific one-offs with no adoption. No evidence of a structural reason past attempts died; the pattern is that nobody has packaged this for small teams, not that packaging failed."
+  },
+  "stage_5": {
+    "chosen_approach": "Caller ID-check link: the help-desk agent pastes one link into the ticket or reads a 6-character code; the caller opens it on any device, scans a government ID and takes a live selfie via Stripe Identity (already in the stack via Stripe), and the agent's dashboard flips to Verified with name match and an audit record in under 60 seconds. No IdP integration, no contract, pay per verification or flat $29/month. Customer lens: most magical because it answers the exact 'nobody can vouch' case with a document check. Pragmatic lens: ships in 1-2 days as Next.js plus Stripe Identity sessions. Money lens: clearest card moment because every verification has a visible per-check cost and the agent sees the price before sending the link.",
+    "killed_approaches": [
+      "Manager-vouch push workflow (agent triggers a Slack or Teams approval to the caller's manager pulled from Entra/HRIS): killed because the HN author's specific constraint is contractors and remote hires where no manager can vouch, so it fails the defining case.",
+      "Verification policy and runbook generator (tiered verification policy plus printable audit checklist, SEO-driven): killed because the r/sysadmin and r/msp threads already contain these policies for free and no thread shows anyone paying for a document."
+    ]
+  },
+  "stage_6": {
+    "hypothesis": "We believe IT leads at 50-500 person remote-first companies on Microsoft 365 or Okta who personally approve MFA resets will use a caller ID-check link tool because it's the self-serve, pay-per-check way to verify a caller's government ID and live selfie before an MFA reset, better than Nametag and Specops Secure Service Desk (sales-led enterprise contracts) and Teams video calls with a supervisor (fails for contractors). We'll know we're right if 10 email sign-ups come from one comment each in r/sysadmin and r/msp verification threads within 72 hours.",
+    "test_signal": "10 email sign-ups on the landing page attributable to two Reddit comments (one in a current r/sysadmin MFA-reset thread, one in r/msp), plus 3 of 15 cold DMs to authors of the threads listed in stage_3 replying that they would run it on their next MFA-reset call.",
+    "test_deadline": "72 hours for the 10 sign-ups; 5 days for the DM replies; both must land by 2026-10-28."
+  },
+  "app_name": "reset_verify",
+  "summary": "A self-serve help-desk tool that lets an agent send a caller one link to verify a government ID and live selfie in under 60 seconds before an MFA reset, with an audit log, priced per check instead of through an enterprise contract.",
+  "tech_stack": "Next.js + TypeScript + Tailwind CSS",
+  "id": "hn_50188338",
+  "title": "Ask HN: How does your help desk verify someone before resetting MFA?",
+  "url": "https://news.ycombinator.com/item?id=50188338",
+  "source": "hackernews",
+  "score": 8,
+  "num_comments": 1,
+  "original_body": "Seeing more breaches start with a convincing call to the help desk. Curious what actually works for remote staff and contractors, where nobody can vouch for the caller.",
+  "subreddit": "Ask HN",
+  "_kill_report": "KILLS -- 2026-10-23\n\nTotal candidates evaluated: 30\nKilled: 29  |  Passed to MVP: 1\n\nBy stage:\n  Stage 1 (signal):       22 killed\n  Stage 2 (customer):     4 killed\n  Stage 3 (problem):      1 killed\n  Stage 4 (alternatives): 2 killed\n  Stage 5 (approach):     0 killed\n  Stage 6 (hypothesis):   0 killed\n",
+  "_total_evaluated": 30,
+  "_total_killed": 29,
+  "_runners_up": [
+    {
+      "status": "killed",
+      "killed_at_stage": 4,
+      "kill_reason": "Three-plus well-funded incumbents (CodeRabbit, Greptile, Cursor Bugbot, GitHub Copilot code review, Graphite) already ship the exact thing a product here would be: AI-generated PR summaries, walkthroughs, and line-level review aimed at helping a human approve agent-written code faster. The coding agents themselves (Claude Code, Cursor, Copilot) explain any diff on demand for free. The only differentiator I can articulate, a 'comprehension gate' that lists the invariants/assumptions you must confirm before approving, is a one-week feature for any incumbent, not a product. The structural root cause is unchanged by software: understanding code requires reading it, and the Meta-style mandate to ship faster than you can read is an org decision no IC-purchased tool overrides. The GitHub graveyard shows a steady stream of one-person AI-PR-reviewer GitHub Actions archived within 6-18 months of creation, consistent with the space being commoditized by platform vendors. Post author's question is a norms question ('how much do I need to understand?'); turning it into a tool is a reframe.",
+      "stage_2": {
+        "customer": "Senior/staff ICs at companies with an explicit AI-coding mandate (Meta-style 'ship with AI' expectation) who are the designated approver of agent-generated PRs into a codebase they own and will be paged for. Nameable examples from the thread cluster: Ali Hamie (Meta, the quoted LinkedIn author), HN users ruffrey ('5x longer to review Claude merge requests and I barely understand what I approve'), alentred (team lead rethinking PR review), chfritz (reviewing co-workers' AI PRs), bah9.",
+        "where": "Hacker News (this thread and the 4 linked siblings), r/ExperiencedDevs, r/ClaudeAI and r/cursor, the Cursor community forum, the Claude Developers Discord, The Pragmatic Engineer newsletter comments, company-internal #ai-tooling Slack channels.",
+        "pays_for": "Employer-paid seats for Cursor, Claude Code, GitHub Copilot; AI PR review seats (CodeRabbit, Greptile, Cursor Bugbot); code review workflow tools (Graphite); Sourcegraph/Cody for codebase understanding. Individual spend is near zero; the buyer is the eng org."
+      },
+      "stage_3": {
+        "real_posts": [
+          "https://news.ycombinator.com/item?id=49934037",
+          "https://news.ycombinator.com/item?id=50166173",
+          "https://news.ycombinator.com/item?id=46308807"
+        ],
+        "urgent": "ruffrey (Oct 2026): 'Now I spend nearly the whole workday slogging through convoluted code... WHO HAS SOLVED THIS PROBLEM? PLEASE HELP!' is an active plea for a solution now, not a someday wish. alentred (Oct 20, 2026) says their team is actively changing review process this cycle ('we are now thinking to abandon PRs... adding more rules for code review agents and to CI'). No hard deadline or blocked work in any post; urgency is daily-grind pressure plus an org mandate. Reddit search was attempted but the unauthenticated search.json endpoint returned no JSON; queries tried on HN Algolia: 'AI generated code don't understand', 'reviewing AI code takes forever', 'vibe coding don't understand my codebase', 'Copilot code I didn't read shipped'.",
+        "valuable": "ruffrey quantifies: review of agent MRs takes 5x longer than human MRs and consumes nearly the whole workday for a senior engineer. At a loaded senior cost of roughly $150-250/hour, that is on the order of $5k+/week per reviewer in review time alone. The original post's cost is only discomfort, but the sibling posts carry a real hours cost."
+      },
+      "stage_4": {
+        "software": [
+          "CodeRabbit (https://coderabbit.ai): AI PR summaries, walkthroughs, sequence diagrams, line comments. Insufficient only in that it reviews the code rather than verifying the human understood it, but that is the same gap any new entrant has.",
+          "Greptile (https://greptile.com): codebase-aware PR review with summaries. Same gap; already does the explain-this-change job.",
+          "Cursor Bugbot / GitHub Copilot code review (https://cursor.com/bugbot, built into GitHub): bundled with the tools these engineers already use, so a standalone comprehension tool must beat free-and-already-installed."
+        ],
+        "workarounds": [
+          "Ask the same agent that wrote the code to explain the diff and its assumptions before approving (Claude Code, Cursor chat); zero cost, already standard.",
+          "Shift trust to tests and CI: alentred's team is adding review-agent rules and CI gates and considering dropping human PR review entirely.",
+          "Accept partial understanding as the new norm ('level 4 autonomy', per ruffrey) and move on; this is what the Meta post describes as the emerging standard."
+        ],
+        "graveyard": "GitHub search for archived repos (queries: 'ai pull request review archived:true', 'ai code review github action archived:true') returns a steady stream of solo AI-PR-reviewer Actions archived within 6-18 months: tmokmss/bedrock-pr-reviewer (111 stars, archived 2025), TechNickAI/AICodeBot (63 stars), adriangohjw/saltman (30 stars), TurboKach/ai-reviewer, mattsavarino/ai-code-review, and ~8 smaller ones. Pattern: each wrapped one LLM call around a diff, then was obsoleted when GitHub, Cursor, and CodeRabbit shipped the same thing natively. That commoditization has not reversed; it has accelerated."
+      },
+      "stage_5": null,
+      "stage_6": null,
+      "id": "hn_50151036",
+      "title": "Ask HN: How to deal with shipping AI-written code you don't understand?",
+      "url": "https://news.ycombinator.com/item?id=50151036",
+      "source": "hackernews",
+      "score": 611,
+      "num_comments": 746
+    },
+    {
+      "status": "killed",
+      "killed_at_stage": 4,
+      "kill_reason": "Vendor has shipped the fix and the gap is structurally closed to third parties. Google's Gemini API billing docs (ai.google.dev/gemini-api/docs/billing) now document monthly spend caps at both the billing-account tier (Tier 1 defaults to $250, Tier 2 $2,000) and the per-project level, settable in AI Studio. Google's Gemini API lead (logankilpatrick) confirmed this publicly in the HN \u20ac54k Firebase/Gemini thread (item 47791871) in April 2026, with ~10 minute enforcement latency. On top of that: OpenRouter's prepaid-credit model is a hard cap by design; LiteLLM, Helicone, and Cloudflare AI Gateway all offer per-key budgets; and GitHub has 12+ actively maintained free GCP billing kill-switch repos (NoBBomb 59 stars, gcp-cloud-billing-kill-switch, gcp-billing-guard, Firebase-Kill-Switch). The structural problem: the poster's incident was a reused/exposed key hit directly against Google's endpoint. Any third-party proxy or dashboard is bypassed by a leaked key; only the billing owner can enforce a cap, and the billing owner now does. No differentiator can be articulated against a free, native, vendor-enforced cap plus 3+ funded gateway alternatives.",
+      "stage_2": {
+        "customer": "Solo or 2-person dev team on Gemini API Tier 1/Tier 2 pay-as-you-go (not enterprise, no invoiced account), who pastes a personal Google AI Studio key into side projects, hackathon demos, Google Apps Scripts, or Firebase web clients. Typically a Bay Area indie dev or early-stage founder with normal monthly Gemini spend under $50 who treats the key like a password rather than a credit card. The HN poster (kinj28) fits: 'very limited' Flash usage, key copied into Apps Script at a hackathon.",
+        "where": "r/GoogleGeminiAI, r/GeminiAI, r/Bard, r/googlecloud, r/Firebase, Hacker News (Ask HN), Google AI Developers Forum (discuss.ai.google.dev), Build with Google AI Discord, Firebase Discord, hackathon Discords (MLH, Cerebral Valley), Indie Hackers, Lenny's/ Ben's Bites newsletter audiences.",
+        "pays_for": "Gemini/OpenAI/Anthropic API usage ($10-$200/mo), Vercel Pro ($20), Supabase/Firebase Blaze ($25+), Cursor/Claude Code ($20-$200), Cloudflare Workers paid ($5), OpenRouter prepaid credits, 1Password/Doppler for secrets ($0-$8/seat)."
+      },
+      "stage_3": {
+        "real_posts": [
+          "https://news.ycombinator.com/item?id=47791871",
+          "https://news.ycombinator.com/item?id=47943738",
+          "https://news.ycombinator.com/item?id=45241001",
+          "https://news.ycombinator.com/item?id=46378065",
+          "https://www.reddit.com/r/Bard/comments/1d5uazo/hard_billing_limit_for_gemini_api/"
+        ],
+        "urgent": "Card is being charged every ~30 minutes while the poster waits on Google support; the \u20ac54k Firebase/Gemini poster and $67k-in-19-hours poster were both actively trying to stop charges in-flight. Money leaves the account in real time, so a fix would be tried the same day.",
+        "valuable": "Candidate: $2,500 in one day on a baseline of a few dollars/month. Comparable incidents: \u20ac54,000 in 13 hours (HN 47791871, 400 points), $67,000 in 19 hours (HN 47943738), $300 (HN 45241001), $4,676 over 6 weeks on Cloud Run (HN 46378065). Reddit r/Bard thread explicitly asks for a hard billing limit for Gemini API and contrasts with OpenAI's prepaid budget."
+      },
+      "stage_4": {
+        "software": [
+          "Google Gemini API native spend caps (https://ai.google.dev/gemini-api/docs/billing) \u2014 billing-account tier caps ($250 default on Tier 1) plus per-project caps in AI Studio; vendor-enforced, free, bypass-proof. Only weakness is ~10 min latency and project caps being labeled experimental, neither of which a third party can improve on.",
+          "OpenRouter (https://openrouter.ai/docs/api-reference/limits) \u2014 prepaid credits plus per-key limits; a hard cap by construction. Insufficient only if the dev needs Gemini-specific features like Apps Script-friendly direct endpoints, which is a narrow objection.",
+          "LiteLLM proxy (https://docs.litellm.ai/docs/proxy/users), Helicone (https://docs.helicone.ai/features/advanced-usage/custom-rate-limits), Cloudflare AI Gateway (https://developers.cloudflare.com/ai-gateway/) \u2014 per-key budgets and rate limits. Insufficient for this customer only because a leaked raw Google key bypasses the proxy entirely, which is the same structural reason a new product would fail."
+        ],
+        "workarounds": [
+          "Deploy a free GCP billing kill switch (NoBBomb, gcp-cloud-billing-kill-switch, Firebase-Kill-Switch): Cloud Billing budget alert -> Pub/Sub -> Cloud Function that disables billing on the project.",
+          "Keep a separate throwaway GCP project per hackathon/side project with its own key, delete the project afterward, never put the key in client-side or shared code.",
+          "Use a prepaid virtual card (Privacy.com-style) as the billing payment method so the card itself hard-stops the spend; then dispute and lean on Google support goodwill waivers, which is what the poster is doing."
+        ],
+        "graveyard": "GitHub search returned 0 archived repos for 'gcp disable billing budget' or 'openai spend limit proxy'; the space is not a graveyard, it is crowded with living free tools: 12 results for 'disable billing gcp' and 25 for 'billing kill switch', all active (NoBBomb 59 stars, pushed 2026-05; TrisNol/gcp-billing-kill-switch pushed 2026-10-05; Divinci-AI/kill-switch 'born from a $91K Cloudflare bill'). Nothing died from lack of demand; the category is commoditized at $0 and the vendor absorbed the core feature."
+      },
+      "stage_5": null,
+      "stage_6": null,
+      "id": "hn_50168795",
+      "title": "Ask HN: My Gemini bill shot up suddenly to 2500 USD in one day",
+      "url": "https://news.ycombinator.com/item?id=50168795",
+      "source": "hackernews",
+      "score": 10,
+      "num_comments": 3
+    }
+  ]
+}

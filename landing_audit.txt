@@ -1,0 +1,17 @@
+SCORE: 7/10
+
+TOP 3 FIXES:
+
+1. **Move the price line into the hero.** "$4 per check. No contract, no minimum, no sales call." is the only sentence on the page Nametag or Specops could not sign, and it sits below the demo, off-screen on mobile. Add it as a one-line note directly under the email form in `app/page.tsx`. While in that block, change the button to "Email me when I can run my first check" so "link" stops meaning two things in the hero. The headline's link goes to the caller. The button's link goes to the IT lead.
+
+2. **Kill the dead footer links.** All five links in `components/FooterNav.tsx` point to "#". The target reader handles government IDs for a living and will click Privacy before typing a work email. Point Contact at a mailto, make Privacy a one-paragraph page or anchor that states how long ID images are kept, and delete X, GitHub, and Terms until they exist. A dead Privacy link on an ID-collection product undoes the headline's credibility.
+
+3. **Take Stripe Identity out of the "tools you already run" strip.** An IT lead does not run Stripe Identity, so in `components/LogoStrip.tsx` it reads as padding and quietly leaks the strongest trust signal on the page. If it is the verification engine, say so in one line under the price: "ID and selfie checks run on Stripe Identity." If it is not, remove it.
+
+GREEN FLAGS:
+
+- **Headline passes all three Dry tests.** You can see it, you can falsify it, and it opens on the trigger moment the reader lives through every week.
+- **Subhead names the person and the pain in their words.** "The questions you improvise on each call" is how the r/sysadmin thread talks, and "show an auditor" is the payoff they want.
+- **The demo proves the claim instead of decorating it.** A timer that stops at 58 seconds, a caller labelled "contractor, started Tuesday", and an audit log entry reading "government ID + live selfie · PASS" back every word of the H1. Reduced-motion users land on the verified frame.
+- **The CTA is a benefit CTA and honest about pre-launch.** Not "Join the waitlist".
+- **One promise, no feature dump.** Every section serves the same sentence, and the meta title and description match the H1.

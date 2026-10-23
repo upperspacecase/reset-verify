@@ -1,0 +1,17 @@
+HOOK: Before you reset their MFA, send one link: government ID plus live selfie, verified in under 60 seconds, logged.
+
+SUBHEADLINE: For the IT lead on Microsoft 365 or Okta who approves every reset personally: replace the questions you improvise on each call with a check you can show an auditor.
+
+VALUE_PROP:
+The caller opens the link on their phone, scans their ID, takes a selfie. You see pass or fail before you touch the ticket.
+Every check writes a timestamped entry with who verified whom and when.
+Pay per check. No sales call, no annual contract, no Active Directory connector.
+
+CTA: Request early access
+
+SECONDARY_CTA: Read the 60-second procedure
+
+OBJECTIONS:
+- "I already verify on a Teams call with their manager." That works for the employee whose manager you know. It fails for the contractor who started Tuesday and whose manager is a client, and it leaves no record.
+- "My people won't upload a driver's license to a link." They are asking you to hand over their account. Sixty seconds with their ID is a smaller ask than waiting a day for a manager to confirm, and the check comes from your help desk, not a stranger.
+- "Nametag and Specops already do this." Both sell through a sales call with no public price, and Specops assumes Active Directory. Here you sign up, add a card, and pay for the checks you run this week.
